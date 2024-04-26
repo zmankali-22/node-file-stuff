@@ -61,13 +61,21 @@ function createJsonFile(targetpath, data) {
   // Todo: wishlist item because a json file already exist for us
 }
 
-function loadDataFromFile(targetpat) {
+async function loadDataFromFile(targetPath) {
   let data = null;
+  let doesFileExist = await doesFileExistAsync(targetPath);
 
-  //  TODO:load data from file logic goes here
+  if (doesFileExist) {
+    data = await fsPromises.readFile(targetPath, {encoding :'utf-8'});
+    data = JSON.parse(data);
+  }
 
   return data;
 }
+(async () => {
+  let fileData = await loadDataFromFile("./pokemonStats.json");
+  console.log(fileData);
+})();
 
 /*
 
